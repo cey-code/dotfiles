@@ -8,9 +8,6 @@ bindkey "^[^?"    backward-kill-word      # option+backspace
 bindkey "^[d"     kill-word               # option+delete (fn+option+backspace)
 bindkey "^U"      backward-kill-line      # cmd+backspace (kill to line start)
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export DOTENV_ENV=development
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -45,19 +42,21 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Plugins
+# Plugins (fzf-tab must load after compinit and before autosuggestions;
+# syntax-highlighting is sourced last, at the end of this file)
 zinit light zsh-users/zsh-completions
-autoload -Uz compinit && compinit
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-autosuggestions
+autoload -Uz compinit
+# Rebuild the completion dump at most once a day; otherwise trust the cache
+zmodload zsh/datetime zsh/stat
+_zcompdump=${ZDOTDIR:-$HOME}/.zcompdump
+if [[ -f $_zcompdump ]] && (( EPOCHSECONDS - $(zstat +mtime $_zcompdump) < 86400 )); then
+  compinit -C
+else
+  compinit
+fi
+unset _zcompdump
 zinit light Aloxaf/fzf-tab
-
-# Zinit annexes
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+zinit light zsh-users/zsh-autosuggestions
 
 # fzf shell integration (Ctrl+T file picker, Alt+C cd — atuin takes over Ctrl+R below)
 source <(fzf --zsh)
@@ -68,16 +67,12 @@ eval "$(zoxide init zsh)"
 # mise (runtime version manager — reads .nvmrc / .tool-versions / mise.toml)
 eval "$(mise activate zsh)"
 
+# OpenCode, pi and Codex read their GitHub MCP token from this env var. Reuse gh CLI's
+# stored token, scoped to those processes only so it isn't in every shell's environment.
 # pi needs Node >= 22.19 — run it under mise's global LTS regardless of cwd
-alias pi='mise exec node@lts -- pi'
-
-alias oc='opencode'
+oc() { GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token 2>/dev/null)" command opencode "$@"; }
+pi() { GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token 2>/dev/null)" mise exec node@lts -- pi "$@"; }
 alias cc='claude'
-
-# OpenCode's GitHub MCP — reuse gh CLI's stored token (no separate PAT needed)
-if command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1; then
-  export GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token)"
-fi
 
 # atuin (searchable synced shell history — owns Ctrl+R; must init after fzf)
 eval "$(atuin init zsh)"
@@ -96,7 +91,7 @@ planned-auth() {
 
   # gcloud: only re-login if the current token is missing/expired (skips the browser)
   if gcloud auth print-access-token >/dev/null 2>&1; then
-    echo "gcloud auth still valid \u2713"
+    echo "gcloud auth still valid ✓"
   else
     gcloud auth login || return 1
   fi
@@ -108,7 +103,7 @@ planned-auth() {
 codex() {
   local theme=OpenCode-Light
   [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null)" == Dark ]] && theme=OpenCode-Dark
-  command codex -c tui.theme="$theme" "$@"
+  GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token 2>/dev/null)" command codex -c tui.theme="$theme" "$@"
 }
 
 export BUN_INSTALL="$HOME/.bun"
@@ -118,3 +113,6 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 
 alias lg="lazygit"
+
+# Must be sourced last so it can highlight widgets bound by everything above
+zinit light zsh-users/zsh-syntax-highlighting

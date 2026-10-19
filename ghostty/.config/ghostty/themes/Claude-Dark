@@ -1,0 +1,31 @@
+# Claude desktop app theme — dark
+# Matched to the Code tab's built-in terminal ("claude-dark" in the app bundle)
+
+# Normal colors
+palette = 0=#262626
+palette = 1=#ff3a30
+palette = 2=#32d74b
+palette = 3=#ffd014
+palette = 4=#0099ff
+palette = 5=#ff2c56
+palette = 6=#b796ff
+palette = 7=#a6a6a6
+
+# Bright colors
+palette = 8=#525252
+palette = 9=#ff5047
+palette = 10=#32d74b
+palette = 11=#ffd014
+palette = 12=#0087ee
+palette = 13=#ff2c56
+palette = 14=#b796ff
+palette = 15=#ededed
+
+background = #1a1a19
+foreground = #eaecf0
+
+cursor-color = #0099ff
+cursor-text = #1a1a19
+
+selection-background = #12405e
+selection-foreground = #eaecf0

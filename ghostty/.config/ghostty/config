@@ -1,8 +1,9 @@
 # Ghostty config.
 # Reload with: Cmd+Shift+, in Ghostty (or restart).
 
-# Theme — matches nvim colorscheme (Tokyonight Night dark / Catppuccin Latte light)
-theme = dark:TokyoNight Night,light:Catppuccin Latte
+# Theme — matches the Claude desktop app (themes/Claude-Dark, themes/Claude-Light).
+# Previous (matched nvim): theme = dark:TokyoNight Night,light:Catppuccin Latte
+theme = dark:Claude-Dark,light:Claude-Light
 
 # Font — Berkeley Mono (licensed). JetBrainsMono Nerd Font kept as fallback for prompt/icon glyphs.
 font-family = "Berkeley Mono"
