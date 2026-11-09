@@ -9,12 +9,14 @@ zsh/        # ~/.zshrc — starship, fzf, zoxide, mise, atuin, aliases
 starship/   # Starship prompt
 ghostty/    # Ghostty config
 zed/        # Zed editor settings (settings, keymap, themes)
-pi/         # pi agent config (settings, modes, keybindings, models, extensions)
-opencode/   # OpenCode config (providers, MCP servers, theme)
-agents/     # Shared agent skills + commands + global AGENTS.md (~/.agents; used by Pi & Claude Code)
-vscode/     # VS Code editor (settings, keybindings, Twilight theme; symlink via vscode/link.sh)
+agents/     # Shared agent skills + commands + global AGENTS.md (~/.agents; used by Claude Code)
+git/        # ~/.gitconfig (delta pager) + global gitignore
+lazygit/    # lazygit config + delta split script
+mise/       # mise global tools (node lts)
+television/ # television config + cable channels
 claude/     # Claude Code (~/.claude: explorer subagent + Twilight themes — settings stay local for secrets)
 rectangle/  # Rectangle window manager (exported config, not stowed — import via app)
+scripts/    # Helper scripts (Biome format hook used by Claude Code settings)
 Brewfile    # Homebrew packages and casks (`brew bundle dump` output)
 ```
 
@@ -22,8 +24,7 @@ Brewfile    # Homebrew packages and casks (`brew bundle dump` output)
 
 ```bash
 brew bundle            # install everything in Brewfile
-stow zsh starship ghostty zed pi opencode agents claude
-./vscode/link.sh       # VS Code isn't stow-shaped (path has spaces)
+stow zsh starship ghostty zed agents claude git lazygit mise television
 
 # Claude Code shares the same global rules — point its file at the stowed one:
 ln -sf ~/.agents/AGENTS.md ~/.claude/CLAUDE.md
@@ -45,7 +46,8 @@ brew bundle dump --file=Brewfile --force
 ## CLI stack
 
 - **Prompt/shell**: starship, fzf (Ctrl+T files, Alt+C cd), zoxide (`z`), atuin (Ctrl+R history)
-- **Runtimes**: mise (reads `.nvmrc` / `mise.toml`; nvm still installed for legacy)
-- **Git**: gh, lazygit, git-delta, graphite
+- **Runtimes**: mise (reads `.nvmrc` / `mise.toml`), bun
+- **Git**: gh, lazygit, git-delta, graphite, worktrunk (`wt`)
 - **Modern coreutils**: ripgrep, fd, bat (`cat`), eza (`ls`/`ll`/`lt`)
 - **Multiplexer**: zellij
+- **Editor**: Zed (`$EDITOR`)
