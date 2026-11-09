@@ -67,11 +67,6 @@ eval "$(zoxide init zsh)"
 # mise (runtime version manager — reads .nvmrc / .tool-versions / mise.toml)
 eval "$(mise activate zsh)"
 
-# OpenCode, pi and Codex read their GitHub MCP token from this env var. Reuse gh CLI's
-# stored token, scoped to those processes only so it isn't in every shell's environment.
-# pi needs Node >= 22.19 — run it under mise's global LTS regardless of cwd
-oc() { GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token 2>/dev/null)" command opencode "$@"; }
-pi() { GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token 2>/dev/null)" mise exec node@lts -- pi "$@"; }
 alias cc='claude'
 
 # atuin (searchable synced shell history — owns Ctrl+R; must init after fzf)
@@ -97,6 +92,8 @@ planned-auth() {
   fi
 }
 
+# Codex reads its GitHub MCP token from this env var. Reuse gh CLI's stored token,
+# scoped to Codex only so it isn't in every shell's environment.
 # Codex: launch with the OpenCode theme matching the current macOS appearance.
 # (Codex has no native light/dark auto-switch, so we pick at launch. Exact
 #  OpenCode colors live in ~/.codex/themes/OpenCode-{Dark,Light}.tmTheme.)
@@ -109,8 +106,8 @@ codex() {
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export EDITOR="nvim"
-export VISUAL="nvim"
+export EDITOR="/Applications/Zed.app/Contents/MacOS/cli --wait"
+export VISUAL="/Applications/Zed.app/Contents/MacOS/cli --wait"
 
 alias lg="lazygit"
 
