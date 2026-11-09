@@ -1,0 +1,12 @@
+git:
+  diffRenderers:
+    - command: delta --dark --paging=never
+    - name: hunk
+      command: hunk pager --no-sidebar
+gui:
+  showFileTree: true
+  showCommandLog: false
+  sidePanels:
+    - [status]
+    - [files, worktrees, submodules]
+    - [branches, commits, remotes, tags, reflog, stash]
