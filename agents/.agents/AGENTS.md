@@ -1,6 +1,6 @@
 # Agent rules
 
-Shared global instructions for all AI coding agents (Claude Code, Pi, …), applied across every project. Project-specific rules live in each repo's `AGENTS.md` and take precedence on conflicts.
+Shared global instructions for all AI coding agents (Claude Code, Codex, …), applied across every project. Project-specific rules live in each repo's `AGENTS.md` and take precedence on conflicts.
 
 ## Attribution (hard rule)
 - Never mention Claude as a co-author or contributor anywhere: commits, branch names, PR titles, PR descriptions, PR comments. Everything comes from me (ceyhuntopcu).
@@ -40,6 +40,14 @@ Shared global instructions for all AI coding agents (Claude Code, Pi, …), appl
 ### Backend
 - Always investigate the full blast radius, code quality and code duplication.
 - Never create a new helper for one use case when a similar helper already exists.
+
+### Comments
+- Comment only when the code can't speak for itself: a non-obvious reason, a workaround, a hidden constraint.
+- Keep each comment short, ideally one line. Say why, not what.
+
+### Tests
+- Add tests only for new behaviour or complex logic.
+- Don't test trivial or pass-through code, and don't add a test for every change.
 
 ### Repo practices
 - Follow the repo's existing code practices. When unsure how something is done, look at how Ervin, Karim or Sehal do it.
