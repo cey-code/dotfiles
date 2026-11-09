@@ -47,3 +47,6 @@ unfocused-split-opacity = 0.85
 # Without this, Ghostty treats Option as a compose key and the delete doesn't fire.
 keybind = opt+backspace=text:\x1b\x7f
 keybind = opt+delete=text:\x1bd
+
+# Nightly builds, trying for the macOS 27 titlebar-tabs bug. Switch back to "stable" once a release fixes it.
+auto-update-channel = tip

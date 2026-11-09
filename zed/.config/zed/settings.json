@@ -7,6 +7,12 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "markdown_preview": {
+    "font_family": "Inter"
+  },
+  "edit_predictions": {
+    "provider": "copilot"
+  },
   "agent_servers": {
     "claude-acp": {
       "default_config_options": {
@@ -45,7 +51,6 @@
   "file_finder": {
     "file_icons": true
   },
-  "markdown_preview_font_family": "Inter",
   "completion_menu_item_kind": "symbol",
   // Font
   "agent_buffer_font_size": 15.0,
@@ -56,7 +61,7 @@
   // "ui_font_family": "Braun Linear",
   "ui_font_family": "Berkeley Mono",
   "title_bar": {
-    "show_branch_icon": true, // Show/hide branch icon beside branch switcher
+    // Show/hide branch icon beside branch switcher
     "show_branch_name": true, // Show/hide branch name
     "show_branch_status_icon": true,
     "show_project_items": true, // Show/hide project host and name
@@ -144,9 +149,9 @@
     "use_system_clipboard": "always"
   },
   "project_panel": {
+    "folder_indicator": "icon",
     "git_status": true,
     "button": true,
-    "folder_icons": true,
     "indent_guides": {
       "show": "never"
     },
@@ -194,9 +199,6 @@
     "git_status": true
   },
   // Edit prediction
-  "features": {
-    "edit_prediction_provider": "copilot"
-  },
   "show_edit_predictions": true,
   "max_tabs": null,
   "status_bar": {
